@@ -32,4 +32,19 @@ Create a new terminal (the + near the bin symbol) and run this to start the app 
 npx react-native run-android
 ```
 
+## **Running on an Android Emulator**
+
+You'll need to create an emulation device. 
+- Open Android Studio.
+- Press the three dots (top right hand) or 'Configure' (bottom right)
+- Click 'AVD Manager'
+- Click 'Create Virtual Device'
+- I'd recommend using Pixel 4/4a/5, this way everything will scale up nicely to the XL screens
+- Follow the instructions (Use Android S if you can, try to keep it as recent as possible)
+- Once done, press the green play button in the AVD Manager
+![Image](assets/avdmanager.png)
+
+Follow the VSCode steps in the above section.
+<br/>
+<br/>
 Let me know if you have any issues :)
