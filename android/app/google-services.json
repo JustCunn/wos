@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "356649573685",
+    "project_id": "watchout-safety",
+    "storage_bucket": "watchout-safety.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356649573685:android:1b841ad6cd7a6805f5807c",
+        "android_client_info": {
+          "package_name": "com.wos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356649573685-f3mad5369gn9h0770rbjm9r1abmqgvmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbgZIRHZkpGJ27-Vr0Egy4kWj4Z1790Kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356649573685-f3mad5369gn9h0770rbjm9r1abmqgvmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
