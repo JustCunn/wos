@@ -8,6 +8,9 @@ export default StyleSheet.create({
         paddingTop: 15,
         backgroundColor: 'white',
     },
+    safeContainer: {
+        width: '100%',
+    },
     textInput: {
         backgroundColor: '#fafafa',
         marginTop: 5,

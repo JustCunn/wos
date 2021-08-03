@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import GLOBAL from '../global.js';
 
 import styles from './info.styles.js';
 
-export default function Info() {
+export default function Info(props) {
     return (
         <View style={styles.container}>
             <View style={styles.section}>
@@ -15,14 +16,14 @@ export default function Info() {
                 </View>
             </View>
             <View style={styles.banner}>
-                <Text style={styles.bannerText}>New Children's Hospital</Text>
+                <Text style={styles.bannerText}>{GLOBAL.siteName}</Text>
             </View>
             <View style={styles.section}>
                 <View style={styles.left}>
                     <Text style={styles.head2}>Foreman</Text>
                 </View>
                 <View styles={styles.right}>
-                    <Text style={styles.resp2}>Johnny Appleseed</Text>
+                    <Text style={styles.resp2}>{GLOBAL.foreman}</Text>
                 </View> 
             </View>
             <View style={styles.section}>
@@ -30,7 +31,7 @@ export default function Info() {
                     <Text style={styles.head2}>SSO</Text>
                 </View>
                 <View styles={styles.right}>
-                    <Text style={styles.resp2}>Jane Doe</Text>
+                    <Text style={styles.resp2}>{GLOBAL.sso}</Text>
                 </View> 
             </View>
             <View style={styles.section}>

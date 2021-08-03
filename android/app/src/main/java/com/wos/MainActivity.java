@@ -1,8 +1,6 @@
 package com.wos;
 import android.content.Intent; // <-- include if not already there
-import com.tkporter.sendsms.SendSMSPackage;
 import com.facebook.react.ReactActivity;
-import com.github.wumke.RNImmediatePhoneCall.RNImmediatePhoneCallPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -17,7 +15,6 @@ public class MainActivity extends ReactActivity {
 
   @Override
   public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    RNImmediatePhoneCallPackage.onRequestPermissionsResult(requestCode, permissions, grantResults); // very important event callback
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }   
 
@@ -25,6 +22,5 @@ public class MainActivity extends ReactActivity {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     //probably some other stuff here
-    SendSMSPackage.getInstance().onActivityResult(requestCode, resultCode, data);
 }
 }

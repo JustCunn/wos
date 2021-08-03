@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import RemotePushController from './services/RemotePushController.js';
 import auth, { firebase } from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -17,6 +18,9 @@ import ReportFault from './components/home/reportFault.js';
 const Tab = createBottomTabNavigator();
 const ForeStack = createStackNavigator();
 const HomeStack = createStackNavigator();
+
+//const dataBase = firebase.app().database('https://watchout-safety-default-rtdb.europe-west1.firebasedatabase.app/');
+//const userId = auth().currentUser.uid;
 
 function ForemanStackScreen() {
   return (
@@ -42,6 +46,10 @@ export default function App() {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const [foreman, setForeman] = useState(null);
+  const [sso, setSso] = useState(null);
+  const [siteName, setSiteName] = useState(null);
+  const [currentSite, setCurrentSite] = useState(null);
 
   // Handle user state changes
   function onAuthStateChanged(user) {
@@ -51,10 +59,8 @@ export default function App() {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+      subscriber; // unsubscribe on unmount
 
-  useEffect(() => {
     PushNotification.createChannel(
       {
         channelId: "channel-id", // (required)
@@ -81,13 +87,24 @@ export default function App() {
     <>
     <StatusBar translucent={true} backgroundColor="rgba(236, 236, 236, 0.8)"/>
     <NavigationContainer>
-      <Tab.Navigator tabBarOptions={{labelStyle: styles.tabBarStyle}} screenOptions={({route}) => ({
-        tabBarIcon: ({ color, size }) => {
-          return <MaterialCommunityIcons name={'home'} size={size} color={color} />;
-        }
+      <Tab.Navigator tabBarOptions={{activeTintColor: '#4788c6', inactiveTintColor: 'gray'}} screenOptions={({route}) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Home') {
+            iconName = focused 
+              ? 'home'
+              : 'home-outline';
+          } else if (route.name === 'Foreman') {
+            iconName = focused
+              ? 'card-bulleted-settings'
+              : 'card-bulleted-settings-outline';
+          }
+
+          return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+        },
       })} initialRouteName="Home">
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Settings" component={ForemanStackScreen} />
+          <Tab.Screen name="Home" component={HomeStackScreen}/>
+          <Tab.Screen name="Foreman" component={ForemanStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
     <RemotePushController />
@@ -101,5 +118,5 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40
-  }
+  },
 });

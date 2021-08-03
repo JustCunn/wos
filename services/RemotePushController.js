@@ -11,7 +11,7 @@ const RemotePushController = () => {
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function(token) {
-        database.ref('/users/' + userId).set({notif_token: token.token}).then(() => console.log('Data updated.'))
+        database.ref('/users/' + userId).update({notif_token: token.token}).then(() => console.log('Data updated.'))
         .catch((error) => console.log(error))
       },
 // (required) Called when a remote or local notification is opened or received

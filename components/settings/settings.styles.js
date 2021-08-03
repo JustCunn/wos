@@ -9,9 +9,9 @@ export default StyleSheet.create({
         backgroundColor: 'white',
     },
     regButton: {
-        backgroundColor: '#e35959',
+        backgroundColor: '#4788c6',
         width: '70%',
-        height: '7%',
+        height: 50,
         borderRadius: 7,
         display: 'flex',
         justifyContent: 'center',

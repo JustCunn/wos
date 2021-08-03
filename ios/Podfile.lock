@@ -221,6 +221,25 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.7)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
+  - EXConstants (11.0.1):
+    - ExpoModulesCore
+    - UMCore
+  - EXFileSystem (11.1.3):
+    - ExpoModulesCore
+    - UMCore
+  - EXImageLoader (2.2.0):
+    - ExpoModulesCore
+    - React-Core
+    - UMCore
+  - ExpoModulesCore (0.2.0):
+    - ExpoModulesCore/Core (= 0.2.0)
+    - ExpoModulesCore/Interfaces (= 0.2.0)
+    - UMCore
+  - ExpoModulesCore/Core (0.2.0):
+    - UMCore
+  - ExpoModulesCore/Interfaces (0.2.0):
+    - ExpoModulesCore/Core
+    - UMCore
   - FBLazyVector (0.64.2)
   - FBReactNativeSpec (0.64.2):
     - RCT-Folly (= 2020.01.13.00)
@@ -562,12 +581,10 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
-  - react-native-immediate-phone-call (2.0.0):
-    - React
+  - react-native-image-picker (4.0.6):
+    - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
-  - react-native-sms (1.11.0):
-    - React
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
     - React-Core/RCTActionSheetHeaders (= 0.64.2)
@@ -636,6 +653,8 @@ PODS:
     - React
   - RNCPicker (1.16.4):
     - React-Core
+  - RNCPushNotificationIOS (1.8.0):
+    - React-Core
   - RNFBApp (12.4.0):
     - Firebase/CoreOnly (= 8.4.0)
     - React-Core
@@ -689,12 +708,24 @@ PODS:
     - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
+  - UMAppLoader (2.2.0)
+  - UMCore (7.1.1)
+  - UMReactNativeAdapter (6.3.5):
+    - ExpoModulesCore
+    - React-Core
+    - UMCore
+  - UMTaskManagerInterface (6.2.0):
+    - UMCore
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXFileSystem (from `../node_modules/expo-file-system/ios`)
+  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
+  - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - Flipper (~> 0.75.1)
@@ -730,9 +761,8 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-immediate-phone-call (from `../node_modules/react-native-immediate-phone-call`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-sms (from `../node_modules/react-native-sms`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -747,6 +777,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
@@ -756,6 +787,10 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSensors (from `../node_modules/react-native-sensors`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
+  - "UMCore (from `../node_modules/@unimodules/core/ios`)"
+  - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
+  - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -792,6 +827,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EXConstants:
+    :path: "../node_modules/expo-constants/ios"
+  EXFileSystem:
+    :path: "../node_modules/expo-file-system/ios"
+  EXImageLoader:
+    :path: "../node_modules/expo-image-loader/ios"
+  ExpoModulesCore:
+    :path: "../node_modules/expo-modules-core/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -820,12 +863,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-immediate-phone-call:
-    :path: "../node_modules/react-native-immediate-phone-call"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-sms:
-    :path: "../node_modules/react-native-sms"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -854,6 +895,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -872,6 +915,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sensors"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  UMAppLoader:
+    :path: "../node_modules/unimodules-app-loader/ios"
+  UMCore:
+    :path: "../node_modules/@unimodules/core/ios"
+  UMReactNativeAdapter:
+    :path: "../node_modules/@unimodules/react-native-adapter/ios"
+  UMTaskManagerInterface:
+    :path: "../node_modules/unimodules-task-manager-interface/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -881,6 +932,10 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
+  EXConstants: 3babb61f8f4bb7dffe85b8b7d6eaa31d903e4d7e
+  EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
+  EXImageLoader: d3531a3fe530b22925c19977cb53bb43e3821fe6
+  ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
   FBReactNativeSpec: f05a562368ae794cfa9c5f0f343acc2ff4b6df4b
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
@@ -918,9 +973,8 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-immediate-phone-call: eb8a86325478db6c066eac6ecf8fa9ba3fbf66c5
+  react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
-  react-native-sms: 31fbb9d6ebb565ad32e409eaf9dc70329936a129
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -935,6 +989,7 @@ SPEC CHECKSUMS:
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNCPicker: c620feabdfb8b131fc1be42b407be5bacc147fea
+  RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNFBApp: 97b2da195d4606716b284a7c8a988dd8ed5cec41
   RNFBAuth: 63a3ca8a290937f73fa90d3bf37766458ce03e17
   RNFBDatabase: 40bd9b428a20796b05f310d607e5cadf75110703
@@ -944,9 +999,13 @@ SPEC CHECKSUMS:
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSensors: 96973831f07bf22a3c2488b45f809d7137023580
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
+  UMCore: 2f671796d7439604a1cf8ac7bbe5809cd5c50437
+  UMReactNativeAdapter: f808906d586a16cebdc3844d86e1bdb8f114a873
+  UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 7943fa5546c575b3483c2545416b6c650d359db3
+PODFILE CHECKSUM: 1fee269c91fbe2a852a15672fcdcda5fa26b4a5f
 
 COCOAPODS: 1.10.1
