@@ -13,7 +13,8 @@ export default function Settings({ navigation }) {
     const userId = auth().currentUser.uid;
 
     useEffect(() => {
-        database.ref('/users/' + userId).on('value', snapshot => setFSite(snapshot.val().foreman_site))
+        database.ref('/users/' + userId).on('value', snapshot => setFSite(snapshot.val().foreman_site));
+        
     })
 
     if (fSite === undefined) {
@@ -26,7 +27,9 @@ export default function Settings({ navigation }) {
     }
     else {
         return (
-            <View><Text>This is the settings screen</Text></View>
+            <View>
+                <Text>{fSite}</Text>
+            </View>
         )
     }
 }

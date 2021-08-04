@@ -16,7 +16,7 @@ export default StyleSheet.create({
         margin: 10
     },
     uploadButton: {
-        backgroundColor: '#4888c6',
+        backgroundColor: '#b5dcfd',
         height: 45,
         borderRadius: 7,
         justifyContent: 'center',
@@ -24,5 +24,12 @@ export default StyleSheet.create({
     },
     uploadButtonText: {
         color: 'white',
-    }
+    },
+    sendButton: {
+        backgroundColor: '#4888c6',
+        height: 60,
+        borderRadius: 7,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 })

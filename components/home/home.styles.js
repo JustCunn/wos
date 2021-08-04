@@ -9,17 +9,26 @@ export default StyleSheet.create({
         flex: 1
     },
     button: {
-        width: '95%',
+        width: '90%',
         margin: 10,
-        backgroundColor: 'blue',
+        backgroundColor: '#4788c6',
         height: 70,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 7,
+        borderRadius: 15,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     text: {
-        color: 'white'
+        color: 'white',
+        fontSize: 20,
     },
     nullContainer: {
         display: 'flex',
@@ -51,6 +60,7 @@ export default StyleSheet.create({
         marginTop: 5,
         borderRadius: 7,
         borderWidth: 0.8,
-        width: '70%'
+        width: '70%',
+        height: 40,
     },
 })
