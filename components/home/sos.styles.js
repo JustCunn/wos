@@ -5,7 +5,7 @@ export default StyleSheet.create({
         width: "100%",
         height: 200,
         backgroundColor: 'red',
-        borderRadius: 15,
+        borderRadius: 8,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -15,8 +15,8 @@ export default StyleSheet.create({
         color: 'white'
     },
     touch: {
-        height: '30%',
+        //height: '30%',
         width: '90%',
-        marginBottom: 20
+        marginBottom: 15
     }
 })

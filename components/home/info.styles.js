@@ -11,6 +11,12 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row'
     },
+    numSection: {
+        display: 'flex',
+        flexDirection: 'row',
+        textAlign: 'center',
+        justifyContent: 'center'
+    },
     left: {
         flex: 1
     },
@@ -20,7 +26,7 @@ export default StyleSheet.create({
         flexDirection: 'row-reverse'
     },
     head1: {
-        fontSize: 40,
+        fontSize: 28,
         fontWeight: 'bold'
     },
     resp1: {

@@ -4,19 +4,25 @@ import com.wos.generated.BasePackageList;
 
 import android.app.Application;
 import android.content.Context;
+
 import com.facebook.react.PackageList;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.react.ReactApplication;
+//import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.github.douglasjunior.reactNativeGetLocation.ReactNativeGetLocationPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
-import com.sensors.RNSensorsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
+import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
 import java.util.List;
 import java.util.Arrays;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
+import com.sensors.RNSensorsPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import org.unimodules.adapters.react.ModuleRegistryAdapter;
 import org.unimodules.adapters.react.ReactModuleRegistryProvider;
@@ -43,6 +49,12 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
 	            new ModuleRegistryAdapter(mModuleRegistryProvider)
 	          );
+          new ReactNativeFirebaseStoragePackage();
+          new RNSensorsPackage();
+          new ReactNativePushNotificationPackage();
+          //new SplashScreenReactPackage();
+          packages.add(new MeasurePackage());
+
           packages.addAll(unimodules);
           return packages;
         }

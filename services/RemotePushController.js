@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+/*import React, { useEffect } from 'react'
 import PushNotification from 'react-native-push-notification';
 import database, { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
@@ -16,7 +16,23 @@ const RemotePushController = () => {
       },
 // (required) Called when a remote or local notification is opened or received
       onNotification: function(notification) {
-        console.log('REMOTE NOTIFICATION ==>', notification)
+        console.log('REMOTE NOTIFICATION ==>', notification);
+        PushNotification.localNotification({
+          channelId: 'channel-id',
+          title:notification.data.title,
+          message:notification.data.message,
+          soundName: 'default',
+          playSound: true,
+      });
+        if (notification.foreground) {
+          PushNotification.localNotification({
+              channelId: 'channel-id',
+              title:notification.data.title,
+              message:notification.data.message,
+              soundName: 'default',
+              playSound: true,
+          });
+        }; 
 // process the notification here
       },
       // Android only: GCM or FCM Sender ID
@@ -28,4 +44,4 @@ const RemotePushController = () => {
   }, [])
 return null
 }
-export default RemotePushController
+export default RemotePushController*/

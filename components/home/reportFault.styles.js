@@ -8,15 +8,15 @@ export default StyleSheet.create({
     textInput: {
         backgroundColor: '#fafafa',
         marginTop: 5,
-        borderRadius: 7,
-        borderWidth: 0.8,
+        //borderRadius: 7,
+        borderBottomWidth: 0.8,
     },
     inputContainer: {
         width: '90%',
         margin: 10
     },
     uploadButton: {
-        backgroundColor: '#4888c6',
+        backgroundColor: '#b5dcfd',
         height: 45,
         borderRadius: 7,
         justifyContent: 'center',
@@ -24,5 +24,12 @@ export default StyleSheet.create({
     },
     uploadButtonText: {
         color: 'white',
-    }
+    },
+    sendButton: {
+        backgroundColor: '#4888c6',
+        height: 60,
+        borderRadius: 7,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 })

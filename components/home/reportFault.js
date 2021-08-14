@@ -1,34 +1,100 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView, ScrollView } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import database, { firebase } from '@react-native-firebase/database'
+import auth from '@react-native-firebase/auth'
+import { useNavigation } from '@react-navigation/native';
+import storage from '@react-native-firebase/storage';
+import {Picker} from '@react-native-picker/picker';
 
 import styles from './reportFault.styles.js';
 
+const faults = ['Site Fault', 'Machinery Fault', 'Injury/Close call'];
+
 export default function ReportFault() {
 
-    const [fault, setFault] = useState("")
-    const [image, setImage] = useState(null)
+    const [fault, setFault] = useState("");
+    const [image, setImage] = useState(null);
+    const [currentSite, setCurrentSite] = useState(null);
+    const [selectedFault, setSelectedFault] = useState('Site Fault')
 
-    const onButtonPress = React.useCallback(() => {
+    const navigation = useNavigation();
+    const dataBase = firebase.app().database('https://watchout-safety-default-rtdb.europe-west1.firebasedatabase.app/');
+    const userId = auth().currentUser.uid;
+    
+
+    const handleImageRequest = React.useCallback(() => {
         launchImageLibrary({mediaType: 'photo', selectionLimit: 0}, setImage);
       }, []);
+
+    const onSend = async () => {
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth();
+        const day = new Date().getDay();
+
+        console.log(image)
+        if (image == null) {
+            null
+        }
+        else {
+            image.assets.map( async (item, i) => {
+                const reference = storage().ref(item.fileName);
+                await reference.putFile(item.uri);
+            });
+        }
+
+        const dbRef = dataBase.ref(`/sites/${currentSite}/faults/`).push();
+        const key = dbRef.key;
+        await dbRef.set({
+            fault_type: selectedFault,
+            user: userId,
+            date: `${day}/${month}/${year}`,
+            fault_description: fault,
+        });
+
+        if (image == null) {
+            null
+        }
+        else {
+            image.assets.map( (item, i) => {
+                dataBase.ref(`/sites/${currentSite}/faults/${key}/images/`).push().set(item.fileName)
+            })
+        }
+        navigation.navigate('Home')
+    }
 
     /*const showImage = () => {
         if (image !== null) {
         }
     }*/
 
+    useEffect(() => {
+        dataBase.ref('/users/' + userId).on('value', snapshot => setCurrentSite(snapshot.val().current_site));
+    })
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={{flex: 1,}}>
                 <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 20,}}>
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.inputText}>Fault Type</Text>
+                            <Picker
+                                selectedValue={selectedFault}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setSelectedFault(itemValue)
+                                }>
+                                {faults.map( ( pickedFault, i ) => {
+                                    return <Picker.Item key={i} label={pickedFault} value={pickedFault} />
+                                })}
+                            </Picker>
+                        </View>
                         <View style={styles.inputContainer}>
                             <Text style={styles.inputText}>Description of the fault</Text>
                             <TextInput style={styles.textInput} onChangeText={setFault} 
                             multiline={true} numberOfLines={5} value={fault} placeholder='Describe the fault' />
                         </View>
                         <View style={styles.inputContainer}>
-                            <TouchableOpacity onPress={onButtonPress} style={styles.uploadButton}>
+                            <TouchableOpacity onPress={handleImageRequest} style={styles.uploadButton}>
                                 <Text style={styles.uploadButtonText}>Upload an image</Text>
                             </TouchableOpacity>
                             <ScrollView horizontal={true}>
@@ -38,6 +104,11 @@ export default function ReportFault() {
                                 </View>
                             ))}
                             </ScrollView>
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <TouchableOpacity onPress={() => onSend()} style={styles.sendButton}>
+                                <Text style={styles.uploadButtonText}>Send Report</Text>
+                            </TouchableOpacity>
                         </View>
                 </ScrollView>
             </View>
