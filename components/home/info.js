@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
-import GLOBAL from '../global.js';
 import database, { firebase } from '@react-native-firebase/database';
 
 import styles from './info.styles.js';
@@ -23,13 +22,8 @@ export default function Info(props) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.section}>
-                <View style={styles.left}>
-                    <Text style={styles.head1}>Site No.</Text>
-                </View>
-                <View style={styles.right}>
-                    <Text style={styles.resp1}>891527</Text>
-                </View>
+            <View style={styles.numSection}>
+                <Text style={styles.head1}>{props.currentSite}</Text>
             </View>
             <View style={styles.banner}>
                 <Text style={styles.bannerText}>{siteName}</Text>

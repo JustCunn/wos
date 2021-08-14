@@ -8,8 +8,8 @@ export default StyleSheet.create({
     textInput: {
         backgroundColor: '#fafafa',
         marginTop: 5,
-        borderRadius: 7,
-        borderWidth: 0.8,
+        //borderRadius: 7,
+        borderBottomWidth: 0.8,
     },
     inputContainer: {
         width: '90%',

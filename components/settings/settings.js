@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, Share } from 'react-native';
 import database, { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import SeeFaults from './seeFaults.js'
 
 import styles from './settings.styles.js';
 
 export default function Settings({ navigation }) {
 
-    const [fSite, setFSite] = useState(null)
+    const [fSite, setFSite] = useState(null);
+    const [siteName, setSiteName] = useState(null)
 
     const database = firebase.app().database('https://watchout-safety-default-rtdb.europe-west1.firebasedatabase.app/');
-    const userId = auth().currentUser.uid;
 
-    useEffect(() => {
-        database.ref('/users/' + userId).on('value', snapshot => setFSite(snapshot.val().foreman_site));
-        
+    const onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              `Your site code for ${siteName}'s WatchOut Safety room is ${fSite}.`,
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shareds
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+
+    useEffect(async () => {
+        const userId = await auth().currentUser.uid;
+        console.log(userId)
+        const foremanSiteTemp = await database.ref('/users/' + userId).once('value').then(snapshot => { return snapshot.val().foreman_site });
+        database.ref('/sites/' + foremanSiteTemp).on('value', snapshot => {
+            setSiteName(snapshot.val().site_name)
+        });
+        setFSite(foremanSiteTemp)
     })
 
     if (fSite === undefined) {
@@ -27,9 +53,23 @@ export default function Settings({ navigation }) {
     }
     else {
         return (
-            <View>
-                <Text>{fSite}</Text>
-            </View>
+            <SafeAreaView style={styles.container}>
+                <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 50}} 
+                scrollEnabled={true} style={styles.scrollContainer}>
+                    <Text style={{fontSize: 25}}>{fSite}</Text>
+                    <TouchableOpacity style={styles.button2} title="signout" onPress={onShare}>
+                        <Text style={styles.text2}>Share site code</Text>
+                    </TouchableOpacity>
+                    <View style={styles.homeSettingsView}>
+                        <Text style={styles.homeSettingsText}>Faults</Text>
+                        <View style={styles.homeSettingsLine} />
+                    </View>
+                    {/*<TouchableOpacity style={styles.button1} title="signout" onPress={() => navigation.navigate('Site Faults')}>
+                        <Text style={styles.text1}>See your site faults</Text>
+                    </TouchableOpacity>*/}
+                    <SeeFaults />
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }

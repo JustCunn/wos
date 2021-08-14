@@ -1,7 +1,8 @@
 import React, { useState, } from 'react';
-import { View, Switch, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Switch, TextInput, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import database, { firebase } from '@react-native-firebase/database';
+import Jacob from '../assets/jacob.png';
 
 export default function Login() {
 
@@ -14,6 +15,7 @@ export default function Login() {
 
   const [colour1, setColour1] = useState("black");
   const [colour2, setColour2] = useState("black");
+  const [error, setError] = useState(false);
 
   const [register, setRegister] = useState(false)
 
@@ -39,7 +41,7 @@ export default function Login() {
 
   const loginFn = () => {
     auth().signInWithEmailAndPassword(email, password)
-      .catch(error => console.log(error))
+      .catch(error => setError(true))
   }
 
   const onFocus1 = () => {
@@ -60,15 +62,26 @@ export default function Login() {
 
     return (
         <View style={styles.wrapper}>
-            {register && <TextInput autoCapitalize='none' style={[styles.textInput,]}
-              placeholder="Full Name" onChangeText={setName} value={name}/>}
+          <View style={styles.imageWrapper}>
+            <Image style={{height:100, width:100}} source={Jacob} />
+          </View>
+            {register && (
+            <>
+            <Text style={{marginLeft: 10}}>Full Name</Text>
+            <TextInput autoCapitalize='none' style={[styles.textInput,]} placeholder="Full Name" onChangeText={setName} value={name}/>
+            </>
+              )}
+
+            <Text style={{marginLeft: 10}}>Email Address</Text>
             <TextInput autoCapitalize='none' style={[styles.textInput, {borderColor: colour1}]} onFocus={onFocus1}
             onBlur={onBlur1} placeholder="Email address" onChangeText={setEmail} value={email}/>
             {/*register && <TextInput autoCapitalize='none' style={[styles.textInput,]}
               placeholder="Username" onChangeText={setUsername} value={username}/>*/}
+            
+            <Text style={{marginLeft: 10}}>Password</Text>
             <TextInput autoCapitalize='none' style={[styles.textInput, {borderColor: colour2}]} onFocus={onFocus2}
             onBlur={onBlur2} placeholder="Password" secureTextEntry={true} onChangeText={setPassword} value={password}/>
-
+            {error ? <Text>Your Email or Password is incorrect</Text> : null}
             <TouchableOpacity style={styles.button} title="login" onPress={register ? signupFn : loginFn}>
               <Text style={styles.text}>{register ? 'Sign Up' : 'Log In'}</Text>
               </TouchableOpacity>
@@ -88,18 +101,24 @@ export default function Login() {
 
 const styles = StyleSheet.create({
     wrapper: {
-        margin: 10,
+        padding: 10,
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        backgroundColor: 'white'
+    },
+    imageWrapper: {
+      alignItems: 'center',
+      width: '100%'
     },
     textInput: {
       margin: 10,
-      borderWidth: 1,
-      borderRadius: 7,
       padding: 10,
-      height: 40
+      height: 40,
+      color: 'black',
+      backgroundColor: '#fafafa',
+      borderBottomWidth: 0.8,
     },
     button: {
       margin: 10,

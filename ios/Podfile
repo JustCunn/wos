@@ -18,6 +18,12 @@ target 'wos' do
 
   use_unimodules!
 
+  pod 'RNSensors', :path => '../node_modules/react-native-sensors'
+
+  pod 'ReactNativeGetLocation', :path => '../node_modules/react-native-get-location'
+
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'wosTests' do
     inherit! :complete
     # Pods for testing
