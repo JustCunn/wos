@@ -68,7 +68,7 @@ export const FaultModal = (props) => {
                         const [value, setValue] = useState(false);
                         return (
                             <>
-                            <ImageModal key={i} modalVisible={imageModalVisible} setModalVisible={setImageModalVisible} uri={item} />
+                            <ImageModal modalVisible={imageModalVisible} setModalVisible={setImageModalVisible} uri={item} />
                             <Pressable key={i} onPress={() => setImageModalVisible(!imageModalVisible)}>
                                 <Image style={{height: value ? 200 : 100, width: 100,}}
                                 key={i} source={{uri: String(item)}}/>

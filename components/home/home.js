@@ -34,9 +34,12 @@ const Home = ({ lol }) => {
   //const lol = useSelector((state) => state.App.lol);
 
     //Check users in
-    const checkIn = () => {
+    const checkIn = async () => {
         dataBase.ref('/users/' + userId).update({current_site: siteCode})
         dataBase.ref(`/sites/${siteCode}/workers/${userId}/`).set(true).then(() => console.log('success'))
+        const currentSiteTemp = await dataBase.ref('/users/' + userId).once('value')
+                                .then(snapshot => { return snapshot.val().current_site});
+        setCurrentSite(currentSiteTemp);
     }
 
     //Signs User Out of Firebase Auth
@@ -47,7 +50,7 @@ const Home = ({ lol }) => {
     const moveSite = async () => {
         dataBase.ref(`/sites/${currentSite}/workers/${userId}/`).set(false).then(() => console.log('success'));
         dataBase.ref('/users/' + userId).update({current_site: null});
-        navigation.navigate('Home')
+        setCurrentSite(null);
     }
 
     //Checks if user is associated with a site already
@@ -65,7 +68,7 @@ const Home = ({ lol }) => {
                 dataBase.ref(`/sites/${snapshot.val().foreman_site}/`).update({foremanToken: GLOBAL.notifyId});
             }
         });
-
+        console.log(currentSiteTemp)
         setCurrentSite(currentSiteTemp);
         setUserId(userId);
     });

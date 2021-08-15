@@ -44,14 +44,6 @@ export default function Info(props) {
                     <Text style={styles.resp2}>{ssoName}</Text>
                 </View> 
             </View>
-            <View style={styles.section}>
-                <View style={styles.left}>
-                    <Text style={styles.head2}>Section</Text>
-                </View>
-                <View styles={styles.right}>
-                    <Text style={styles.resp2}>5A</Text>
-                </View>
-            </View>
         </View>
     )
 }
