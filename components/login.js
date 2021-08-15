@@ -81,7 +81,7 @@ export default function Login() {
             <Text style={{marginLeft: 10}}>Password</Text>
             <TextInput autoCapitalize='none' style={[styles.textInput, {borderColor: colour2}]} onFocus={onFocus2}
             onBlur={onBlur2} placeholder="Password" secureTextEntry={true} onChangeText={setPassword} value={password}/>
-            {error ? <Text>Your Email or Password is incorrect</Text> : null}
+            {error ? <Text style={styles.errorText}>Your Email or Password is incorrect</Text> : null}
             <TouchableOpacity style={styles.button} title="login" onPress={register ? signupFn : loginFn}>
               <Text style={styles.text}>{register ? 'Sign Up' : 'Log In'}</Text>
               </TouchableOpacity>
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     },
     text: {
       color: 'white',
+      fontSize: 20
     },
     registerContainer: {
       display: 'flex',
@@ -139,5 +140,10 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       width: '100%',
       padding: 10
+    },
+    errorText: {
+      fontSize: 14,
+      color: 'red',
+      marginLeft: 10
     }
 })
