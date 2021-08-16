@@ -6,6 +6,7 @@ import auth from '@react-native-firebase/auth'
 import { useNavigation } from '@react-navigation/native';
 import storage from '@react-native-firebase/storage';
 import {Picker} from '@react-native-picker/picker';
+import CheckBox from '@react-native-community/checkbox';
 
 import styles from './reportFault.styles.js';
 
@@ -17,6 +18,7 @@ export default function ReportFault() {
     const [image, setImage] = useState(null);
     const [currentSite, setCurrentSite] = useState(null);
     const [selectedFault, setSelectedFault] = useState('Site Fault')
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     const navigation = useNavigation();
     const dataBase = firebase.app().database('https://watchout-safety-default-rtdb.europe-west1.firebasedatabase.app/');
@@ -30,9 +32,8 @@ export default function ReportFault() {
     const onSend = async () => {
         const year = new Date().getFullYear();
         const month = new Date().getMonth();
-        const day = new Date().getDay();
+        const day = new Date().getDate();
 
-        console.log(image)
         if (image == null) {
             null
         }
@@ -45,11 +46,13 @@ export default function ReportFault() {
 
         const dbRef = dataBase.ref(`/sites/${currentSite}/faults/`).push();
         const key = dbRef.key;
+        console.log(day)
         await dbRef.set({
             fault_type: selectedFault,
             user: userId,
-            date: `${day}/${month}/${year}`,
+            date: `${day}/${month+1}/${year}`,
             fault_description: fault,
+            resolved: toggleCheckBox ? 'Yes' : 'No'
         });
 
         if (image == null) {
@@ -104,6 +107,16 @@ export default function ReportFault() {
                                 </View>
                             ))}
                             </ScrollView>
+                        </View>
+                        <View style={styles.checkContainer}>
+                            <Text style={{fontSize: 18}}>Resolved?</Text>
+                            <CheckBox
+                                disabled={false}
+                                value={toggleCheckBox}
+                                onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                                style={{flex:1}}
+                            />
+                            <Text style={{fontSize: 14, fontStyle: 'italic'}}>Tick for 'yes'</Text>
                         </View>
                         <View style={styles.inputContainer}>
                             <TouchableOpacity onPress={() => onSend()} style={styles.sendButton}>
