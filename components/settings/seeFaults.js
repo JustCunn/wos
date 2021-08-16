@@ -14,7 +14,7 @@ export const FaultItem = (props) => {
 
     return (<>
             <FaultModal modalVisible={modalVisible} setModalVisible={setModalVisible} text={props.fault_desc}
-            images={props.images}/>
+            images={props.images} resolved={props.resolved}/>
             <TouchableOpacity style={styles.button} onPress={() => setModalVisible(!modalVisible)}>
                 <Text numberOfLines={1} style={styles.faultTitle}>{props.fault_desc}</Text>
                 <View style={styles.faultInfo}>
@@ -64,6 +64,7 @@ export const FaultModal = (props) => {
                     style={styles.modalScrollView}>
                         <Text style={styles.descText}>{props.text}</Text>
                     </ScrollView>
+                    <Text>Reolved: {props.resolved}</Text>
                     {props.images.map((item, i) => {
                         const [value, setValue] = useState(false);
                         return (
@@ -131,6 +132,7 @@ export default function SeeFaults() {
                 date: faults[i].date,
                 type: faults[i].fault_type,
                 images_uri: image_temp_set,
+                resolved: faults[i].resolved,
             });
         }
         setRows(data);
@@ -141,7 +143,7 @@ export default function SeeFaults() {
             <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 50}}
             style={{width:'100%',}}>
                 {rows.map( (item, i) => {return <FaultItem key={i} fault_desc={item.fault_desc} 
-                owner={item.owner} date={item.date} type={item.type} images={item.images_uri}/> })}
+                owner={item.owner} date={item.date} type={item.type} images={item.images_uri} resolved={item.resolved}/> })}
             </ScrollView>
         </SafeAreaView>
     )
