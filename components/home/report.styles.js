@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     touch: {
         width: '90%',
-        height: 60,
+        height: 40,
         margin: 10
     },
     wrapper: {
@@ -27,7 +27,7 @@ export default StyleSheet.create({
         elevation: 4,*/
     },
     text: {
-        fontSize: 20,
+        fontSize: 16,
         color: 'white',
     }
 })
