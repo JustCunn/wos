@@ -12,7 +12,7 @@ export default StyleSheet.create({
         width: '90%',
         margin: 5,
         backgroundColor: '#4788c6',
-        height: 40,
+        height: 60,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -28,7 +28,7 @@ export default StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 20,
     },
     nullContainer: {
         display: 'flex',
