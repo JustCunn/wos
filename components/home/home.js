@@ -117,16 +117,16 @@ const Home = ({ lol }) => {
                     <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 15}} scrollEnabled={true} style={styles.container}>
                         <SOS/>
                         <Info currentSite={currentSite}/>
-                        <Report fault="a fault" location="Report a Fault"/>
-                        {/*<Report fault="an injury" link="https://forms.gle/F4o79oxs2zcHko9K7"/>
-                        <Report fault="broken equipment" link="https://forms.gle/jY1ZDwgdg7mSTTuZ6"/>*/}
-                        {lol ? <ServiceOn /> : null}
                         <TouchableOpacity style={styles.button} 
                         onPress={() => {
                             lol ? stopMeasureService() : Measure.startService()
                         }}>
                             <Text style={styles.text}>{lol ? 'Stop' : 'Start'} Fall Detection</Text>
                         </TouchableOpacity>
+                        {lol ? <ServiceOn /> : null}
+                        <Report fault="a fault" location="Report a Fault"/>
+                        {/*<Report fault="an injury" link="https://forms.gle/F4o79oxs2zcHko9K7"/>
+                        <Report fault="broken equipment" link="https://forms.gle/jY1ZDwgdg7mSTTuZ6"/>*/}
                         <View style={styles.homeSettingsView}>
                             <Text style={styles.homeSettingsText}>Settings</Text>
                             <View style={styles.homeSettingsLine} />
