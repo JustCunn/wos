@@ -14,8 +14,8 @@ export default StyleSheet.create({
     textInput: {
         backgroundColor: '#fafafa',
         marginTop: 5,
-        borderRadius: 7,
-        borderWidth: 0.8,
+        //borderRadius: 7,
+        borderBottomWidth: 0.8,
     },
     inputContainer: {
         width: '90%',
@@ -29,13 +29,18 @@ export default StyleSheet.create({
         fontSize: 20,
     },
     button: {
-        backgroundColor: '#e35959',
+        backgroundColor: '#4788c6',
         width: '90%',
-        height: '7%',
+        height: 50,
         borderRadius: 7,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         margin: 15,
+    },
+    checkContainer: {
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 })

@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } fro
 import {Picker} from '@react-native-picker/picker';
 import database, { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import CheckBox from '@react-native-community/checkbox';
 
 import styles from './register.styles.js';
 
@@ -19,6 +20,10 @@ export default function Register({ navigation }) {
     const [fmNumber, setFmNumber] = useState('');
     const [name, setName] = useState('');
     const [foremanToken, setForemanToken] = useState('');
+    const [company, setCompany] = useState('');
+    const [customCode, setCustomCode] = useState('');
+
+    const [inputEnable, setInputEnable] = useState(false);
 
     const dataBase = firebase.app().database('https://watchout-safety-default-rtdb.europe-west1.firebasedatabase.app/');
     const userId = auth().currentUser.uid;
@@ -31,21 +36,38 @@ export default function Register({ navigation }) {
     })
 
     const handleButtonPress = () => {
-        const newRef = dataBase.ref('/sites').push()
-        //console.log(newRef.key)
-        newRef.update({
-            site_name: siteName,
-            safetyOfficerName: safetyOfficer,
-            soNumber: soNumber,
-            fmNumber: fmNumber,
-            county: selectedCounty,
-            foremanName: name,
-            foremanToken: foremanToken,
-        }).then(() => console.log('Data updated.'))
-        .catch((error) => console.log(error));
-        dataBase.ref('/users/' + userId).update({foreman_site: newRef.key}).then(() => console.log('Data updated.'))
-        .catch((error) => console.log(error));
-        navigation.navigate('Foreman');
+        if (inputEnable) {
+            dataBase.ref(`/sites/${company}-${customCode}/`).update({
+                site_name: siteName,
+                safetyOfficerName: safetyOfficer,
+                soNumber: soNumber,
+                fmNumber: fmNumber,
+                county: selectedCounty,
+                foremanName: name,
+                foremanToken: foremanToken,
+            })
+            .then(() => console.log('Data updated.'))
+            .catch((error) => console.log(error));
+            dataBase.ref('/users/' + userId).update({foreman_site: `${company}-${customCode}`}).then(() => console.log('Data updated.'))
+            .catch((error) => console.log(error));
+            navigation.navigate('Foreman');
+        } else {
+            const newRef = dataBase.ref('/sites').push()
+            //console.log(newRef.key)
+            newRef.update({
+                site_name: siteName,
+                safetyOfficerName: safetyOfficer,
+                soNumber: soNumber,
+                fmNumber: fmNumber,
+                county: selectedCounty,
+                foremanName: name,
+                foremanToken: foremanToken,
+            }).then(() => console.log('Data updated.'))
+            .catch((error) => console.log(error));
+            dataBase.ref('/users/' + userId).update({foreman_site: newRef.key}).then(() => console.log('Data updated.'))
+            .catch((error) => console.log(error));
+            navigation.navigate('Foreman');
+        }
     }
 
     return (
@@ -68,6 +90,27 @@ export default function Register({ navigation }) {
                     <Text style={styles.inputText}>Your Phone Number</Text>
                     <TextInput style={styles.textInput} onChangeText={setFmNumber} value={fmNumber} placeholder='e.g. +353841234567' />
                 </View>
+                <View style={styles.checkContainer}>
+                    <Text style={{fontSize: 18}}>Use Custom Code?</Text>
+                    <CheckBox
+                        disabled={false}
+                        value={inputEnable}
+                        onValueChange={(newValue) => setInputEnable(newValue)}
+                        style={{flex:1}}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputText}>You can use a custom code if your site uses an existing internal site code. It will use your
+                    company's name and the internal code to generate a code like 'sisk-123456'. Otherwise we'll generate a code for you.</Text>
+                </View>
+                <View style={[styles.inputContainer,]}>
+                    <Text style={styles.inputText}>Company Name</Text>
+                    <TextInput style={[styles.textInput, {backgroundColor: inputEnable ? '#fafafa' : '#d6d6d6'}]} editable={inputEnable} onChangeText={setCompany} value={company} placeholder='e.g. sisk' />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputText}>Custom Site Code</Text>
+                    <TextInput style={[styles.textInput, {backgroundColor: inputEnable ? '#fafafa' : '#d6d6d6'}]} editable={inputEnable} onChangeText={setCustomCode} value={customCode} placeholder='e.g. 123456' />
+                </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputText}>County</Text>
                     <Picker
@@ -75,8 +118,8 @@ export default function Register({ navigation }) {
                         onValueChange={(itemValue, itemIndex) =>
                             setCounty(itemValue)
                         }>
-                        {counties.map(county => {
-                            return <Picker.Item label={county} value={county} />
+                        {counties.map( ( county, i ) => {
+                            return <Picker.Item key={i} label={county} value={county} />
                         })}
                     </Picker>
                 </View>

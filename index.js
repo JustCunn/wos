@@ -36,7 +36,6 @@ PushNotification.createChannel(
 PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: function(token) {
-        setTimeout(() => {
             const current_user = auth().currentUser
             if (current_user !== null) {
                 const uid = current_user.uid;
@@ -44,7 +43,6 @@ PushNotification.configure({
                 .catch((error) => console.log(error));
                 GLOBAL.notifyId = token.token;
             }
-        }, 2000);
     },
 // (required) Called when a remote or local notification is opened or received
     onNotification: function(notification) {
@@ -95,13 +93,13 @@ const MyHeadlessTask = async () => {
         const acc = Math.sqrt((event.accelerometer.x - event.gravity.x)**2 +
                 (event.accelerometer.y - event.gravity.y)**2 +
                 (event.accelerometer.z - event.gravity.z)**2);
-        if (GLOBAL.prevAcc > 3 && acc < 0.338) {
+        if (GLOBAL.prevAcc > 3 && acc < 1) {
             const loc = await GetLocation.getCurrentPosition({
                 enableHighAccuracy: true,
                 timeout: 15000,
             }).then(location => {return location})
             const response = await fetch(
-                `https://watchout-flask.herokuapp.com/sos_notify/${GLOBAL.foremanRegToken},${loc.latitude},${loc.longitude}`,
+         w       `https://watchout-flask.herokuapp.com/sos_notify/${GLOBAL.foremanRegToken},${loc.latitude},${loc.longitude}`,
                 {
                 method: 'POST',
                 headers: {

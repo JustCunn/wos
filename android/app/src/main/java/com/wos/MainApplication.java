@@ -8,7 +8,9 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 //import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.github.douglasjunior.reactNativeGetLocation.ReactNativeGetLocationPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
@@ -52,6 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeFirebaseStoragePackage();
           new RNSensorsPackage();
           new ReactNativePushNotificationPackage();
+          new ReactCheckBoxPackage();
           //new SplashScreenReactPackage();
           packages.add(new MeasurePackage());
 

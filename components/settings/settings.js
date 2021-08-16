@@ -36,11 +36,16 @@ export default function Settings({ navigation }) {
     useEffect(async () => {
         const userId = await auth().currentUser.uid;
         console.log(userId)
-        const foremanSiteTemp = await database.ref('/users/' + userId).once('value').then(snapshot => { return snapshot.val().foreman_site });
-        database.ref('/sites/' + foremanSiteTemp).on('value', snapshot => {
-            setSiteName(snapshot.val().site_name)
-        });
-        setFSite(foremanSiteTemp)
+        database.ref('/users/' + userId).on('value', snapshot => { 
+          if ( snapshot.val().foreman_site === undefined | null) {
+            null
+          } else {
+            database.ref('/sites/' + snapshot.val().foreman_site).on('value', snapshot => {
+              setSiteName(snapshot.val().site_name)
+            });
+          }
+          setFSite(snapshot.val().foreman_site);
+         });
     })
 
     if (fSite === undefined) {
@@ -56,7 +61,7 @@ export default function Settings({ navigation }) {
             <SafeAreaView style={styles.container}>
                 <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 50}} 
                 scrollEnabled={true} style={styles.scrollContainer}>
-                    <Text style={{fontSize: 25}}>{fSite}</Text>
+                    <Text style={{fontSize: 25, fontWeight: 'bold',}}>{fSite}</Text>
                     <TouchableOpacity style={styles.button2} title="signout" onPress={onShare}>
                         <Text style={styles.text2}>Share site code</Text>
                     </TouchableOpacity>
