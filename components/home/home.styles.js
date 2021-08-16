@@ -8,7 +8,7 @@ export default StyleSheet.create({
     container: {
         flex: 1
     },
-    button: {
+    button1: {
         width: '90%',
         margin: 5,
         backgroundColor: '#4788c6',
@@ -26,9 +26,23 @@ export default StyleSheet.create({
 
         elevation: 4,*/
     },
-    text: {
+    button2: {
+        width: '90%',
+        margin: 5,
+        backgroundColor: '#4788c6',
+        height: 40,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    text1: {
         color: 'white',
         fontSize: 20,
+    },
+    text2: {
+        color: 'white',
+        fontSize: 16,
     },
     nullContainer: {
         display: 'flex',
