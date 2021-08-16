@@ -10,6 +10,7 @@ export default StyleSheet.create({
         marginTop: 5,
         //borderRadius: 7,
         borderBottomWidth: 0.8,
+        color: 'black',
     },
     inputContainer: {
         width: '90%',
@@ -32,4 +33,9 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    checkContainer: {
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 })
