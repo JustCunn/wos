@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         borderColor: '#03fc8c',
-        marginBottom: 10,
+        marginBottom: 5,
     },
     indContainer: {
         flex: 1,
