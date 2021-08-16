@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, connect } from 'react-redux';
 import { setLol, setData, store } from '../../store.js';
-import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Modal } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Share } from 'react-native';
 import SOS from './sos.js'
 import Report from './report.js';
 import Info from './info.js';
@@ -52,6 +52,26 @@ const Home = ({ lol }) => {
         dataBase.ref('/users/' + userId).update({current_site: null});
         setCurrentSite(null);
     }
+
+    const onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              `${GLOBAL.notifyId}`,
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shareds
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      };
 
     //Checks if user is associated with a site already
     useEffect(async () => {
@@ -117,7 +137,9 @@ const Home = ({ lol }) => {
                         <TouchableOpacity style={styles.button} title="signout" onPress={signOutFn}>
                             <Text style={styles.text}>Sign Out</Text>
                         </TouchableOpacity>
-                        <Text style={{marginTop: 20}}>Your User ID is {userId}</Text>
+                        <TouchableOpacity style={styles.button} title="share" onPress={onShare}>
+                            <Text style={styles.text}>Share User Token</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
             </SafeAreaView>

@@ -16,6 +16,7 @@ export default function Register({ navigation }) {
     const [selectedCounty, setCounty] = useState('Antrim');
     const [siteName, setSiteName] = useState('');
     const [safetyOfficer, setSafetyOfficer] = useState('');
+    const [safetyOfficerToken, setSafetyOfficerToken] = useState('');
     const [soNumber, setSoNumber] = useState('');
     const [fmNumber, setFmNumber] = useState('');
     const [name, setName] = useState('');
@@ -81,6 +82,12 @@ export default function Register({ navigation }) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputText}>Safety Officer Name</Text>
                     <TextInput style={styles.textInput} onChangeText={setSafetyOfficer} value={safetyOfficer} placeholder='Safety Officer' />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputText}>Safety Officer User Token</Text>
+                    <TextInput style={styles.textInput} onChangeText={setSafetyOfficerToken} value={safetyOfficerToken} placeholder='Safety Officer' />
+                    <Text style={[styles.inputText, {fontStyle: 'italic'}]}>Safety Officers can share this code with 
+                    you using the 'share' button at the bottom of the Home Menu</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputText}>Safety Officer Phone Number</Text>
