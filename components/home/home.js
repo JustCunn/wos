@@ -117,7 +117,7 @@ const Home = ({ lol }) => {
                     <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 15}} scrollEnabled={true} style={styles.container}>
                         <SOS/>
                         <Info currentSite={currentSite}/>
-                        <TouchableOpacity style={styles.button} 
+                        <TouchableOpacity style={styles.button1} 
                         onPress={() => {
                             lol ? stopMeasureService() : Measure.startService()
                         }}>
@@ -131,13 +131,13 @@ const Home = ({ lol }) => {
                             <Text style={styles.homeSettingsText}>Settings</Text>
                             <View style={styles.homeSettingsLine} />
                         </View>
-                        <TouchableOpacity style={styles.button} title="signout" onPress={() => moveSite()}>
+                        <TouchableOpacity style={styles.button2} title="signout" onPress={() => moveSite()}>
                             <Text style={styles.text}>Enter New Site Code</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} title="signout" onPress={signOutFn}>
+                        <TouchableOpacity style={styles.button2} title="signout" onPress={signOutFn}>
                             <Text style={styles.text}>Sign Out</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} title="share" onPress={onShare}>
+                        <TouchableOpacity style={styles.button2} title="share" onPress={onShare}>
                             <Text style={styles.text}>Share User Token</Text>
                         </TouchableOpacity>
                     </ScrollView>
