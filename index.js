@@ -99,22 +99,24 @@ const MyHeadlessTask = async () => {
                 console.log('Hello')
                 const loc = await GetLocation.getCurrentPosition({
                     enableHighAccuracy: true,
-                    timeout: 200000,
+                    timeout: 15000,
                 }).then(location => {return location})
                 const response = await fetch(
                     `https://watchout-flask.herokuapp.com/sos_notify/${GLOBAL.foremanRegToken},${loc.latitude},${loc.longitude}`,
                     {
-                    method: 'POST',
-                    headers: {
+                    method: 'GET',
+                    /*headers: {
                         'Content-Type': 'application/json',
                     },
-                    /*body: {
+                    body: {
                         "reg_token": GLOBAL.foremanRegToken
                     }*/
                 }
                     )
             }, 10000);
-            Measure.stopService();
+            setTimeout(() => {
+                Measure.stopService();
+            }, 20000);
             store.dispatch(setLol(false));
         }
         console.log(acc)
