@@ -108,8 +108,8 @@ const Home = ({ lol }) => {
                         <Text style={styles.regButtonText}>➜</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={[styles.button, {position: 'absolute', bottom: 10}]} title="signout" onPress={signOutFn}>
-                    <Text style={styles.text}>Sign Out</Text>
+                <TouchableOpacity style={[styles.button2, {position: 'absolute', bottom: 10}]} title="signout" onPress={signOutFn}>
+                    <Text style={styles.text2}>Sign Out</Text>
                 </TouchableOpacity>
             </SafeAreaView>
         )

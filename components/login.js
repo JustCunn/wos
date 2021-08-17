@@ -40,7 +40,8 @@ export default function Login() {
   }
 
   const loginFn = () => {
-    auth().signInWithEmailAndPassword(email, password)
+    console.log(email + password)
+    auth().signInWithEmailAndPassword(email, password).then(() => console.log('success'))
       .catch(error => setError(true))
   }
 
