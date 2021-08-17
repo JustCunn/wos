@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, connect } from 'react-redux';
 import { setLol, setData, store } from '../../store.js';
-import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Share } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Share, Linking } from 'react-native';
 import SOS from './sos.js'
 import Report from './report.js';
 import Info from './info.js';
@@ -19,6 +19,11 @@ const stopMeasureService = () => {
     setTimeout(() => {
         store.dispatch(setLol(false));
     }, 1000);
+}
+
+const startMeasureService = () => {
+    Measure.startService();
+    store.dispatch(setLol(true));
 }
 
 const Home = ({ lol }) => {
@@ -117,28 +122,34 @@ const Home = ({ lol }) => {
                     <ScrollView contentContainerStyle={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 15}} scrollEnabled={true} style={styles.container}>
                         <SOS/>
                         <Info currentSite={currentSite}/>
+
                         <TouchableOpacity style={styles.button1} 
-                        onPress={() => {
-                            lol ? stopMeasureService() : Measure.startService()
-                        }}>
-                            <Text style={styles.text}>{lol ? 'Stop' : 'Start'} Fall Detection</Text>
+                            onPress={() => {
+                                lol ? stopMeasureService() : startMeasureService()
+                            }}>
+                            <Text style={styles.text1}>{lol ? 'Stop' : 'Start'} Fall Detection</Text>
                         </TouchableOpacity>
+                        <View style={{marginBottom: 5}}>
+                            <Text>Make sure your LOCATION is turned ON</Text>
+                        </View>
                         {lol ? <ServiceOn /> : null}
+
                         <Report fault="a fault" location="Report a Fault"/>
-                        {/*<Report fault="an injury" link="https://forms.gle/F4o79oxs2zcHko9K7"/>
-                        <Report fault="broken equipment" link="https://forms.gle/jY1ZDwgdg7mSTTuZ6"/>*/}
                         <View style={styles.homeSettingsView}>
                             <Text style={styles.homeSettingsText}>Settings</Text>
                             <View style={styles.homeSettingsLine} />
                         </View>
                         <TouchableOpacity style={styles.button2} title="signout" onPress={() => moveSite()}>
-                            <Text style={styles.text}>Enter New Site Code</Text>
+                            <Text style={styles.text2}>Enter New Site Code</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button2} title="signout" onPress={signOutFn}>
-                            <Text style={styles.text}>Sign Out</Text>
+                            <Text style={styles.text2}>Sign Out</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button2} title="ppolicy" onPress={() => Linking.openURL('https://www.watchoutsafety.com/#testimonials')}>
+                            <Text style={styles.text2}>Privacy Policy</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button2} title="share" onPress={onShare}>
-                            <Text style={styles.text}>Share User Token</Text>
+                            <Text style={styles.text2}>Share User Token</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

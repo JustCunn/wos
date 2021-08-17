@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { View, Switch, TextInput, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { View, Switch, TextInput, StyleSheet, TouchableOpacity, Text, Image, Linking } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import database, { firebase } from '@react-native-firebase/database';
 import Jacob from '../assets/jacob.png';
@@ -95,6 +95,9 @@ export default function Login() {
                   value={register}/>
               </View>
             </View>
+            <TouchableOpacity style={styles.button2} title="ppolicy" onPress={() => Linking.openURL('https://www.watchoutsafety.com/#testimonials')}>
+                <Text style={styles.text2}>Privacy Policy</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -145,5 +148,22 @@ const styles = StyleSheet.create({
       fontSize: 14,
       color: 'red',
       marginLeft: 10
-    }
+    },
+    text2: {
+      color: '#4788c6',
+      fontSize: 16,
+    },
+    button2: {
+      width: '100%',
+      margin: 5,
+      backgroundColor: 'white',
+      height: 40,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 5,
+      position: 'absolute',
+      bottom: 10,
+
+  },
 })

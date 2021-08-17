@@ -9,7 +9,7 @@ import {name as appName} from './app.json';
 import { Provider } from 'react-redux';
 import { setLol, setData, store } from './store';
 import { connect } from 'react-redux';
-import { accelerometer, setUpdateIntervalForType, SensorTypes, gravity, set} from 'react-native-sensors';
+import { accelerometer, setUpdateIntervalForType, SensorTypes, gravity, set, gyroscope} from 'react-native-sensors';
 import { combineLatest } from "rxjs";
 import { map, filter } from "rxjs/operators";
 import GLOBAL from './global.js';
@@ -17,6 +17,7 @@ import PushNotification, {Importance} from 'react-native-push-notification';
 import database, { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import GetLocation from 'react-native-get-location'
+import Measure from './Measure.js';
 
 const dataBase = firebase.app().database('https://watchout-safety-default-rtdb.europe-west1.firebasedatabase.app/');
 
@@ -77,18 +78,16 @@ PushNotification.configure({
     foreground: true,
 })
 
-const getDisplacement = (initialVel, time, acceleration) => {
-    return initialVel * time + 0.5 * acceleration * (time ** 2);
-}
-
 const MyHeadlessTask = async () => {
     setUpdateIntervalForType(SensorTypes.accelerometer, 20);
     setUpdateIntervalForType(SensorTypes.gravity, 20);
+    setUpdateIntervalForType(SensorTypes.gyroscope, 20);
 
-    const userAccelerationStream = combineLatest([accelerometer, gravity]).pipe(
-        map(([accelerometerValue, gravityValue]) => ({
+    const userAccelerationStream = combineLatest([accelerometer, gravity, gyroscope]).pipe(
+        map(([accelerometerValue, gravityValue, gyroscopeValue]) => ({
           accelerometer: accelerometerValue,
           gravity: gravityValue,
+          gyroscope: gyroscopeValue,
     })));
 
     const subscription = userAccelerationStream.subscribe(async event => {
@@ -96,25 +95,30 @@ const MyHeadlessTask = async () => {
                 (event.accelerometer.y - event.gravity.y)**2 +
                 (event.accelerometer.z - event.gravity.z)**2);
         if (GLOBAL.prevAcc > 3 && acc < 0.338) {
-            const loc = await GetLocation.getCurrentPosition({
-                enableHighAccuracy: true,
-                timeout: 15000,
-            }).then(location => {return location})
-            const response = await fetch(
-                `https://watchout-flask.herokuapp.com/sos_notify/${GLOBAL.foremanRegToken},${loc.latitude},${loc.longitude}`,
-                {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                /*body: {
-                    "reg_token": GLOBAL.foremanRegToken
-                }*/
+            setTimeout(async () => {
+                console.log('Hello')
+                const loc = await GetLocation.getCurrentPosition({
+                    enableHighAccuracy: true,
+                    timeout: 200000,
+                }).then(location => {return location})
+                const response = await fetch(
+                    `https://watchout-flask.herokuapp.com/sos_notify/${GLOBAL.foremanRegToken},${loc.latitude},${loc.longitude}`,
+                    {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    /*body: {
+                        "reg_token": GLOBAL.foremanRegToken
+                    }*/
+                }
+                    )
+            }, 10000);
+            Measure.stopService();
+            store.dispatch(setLol(false));
         }
-                )
-        }
+        console.log(acc)
         GLOBAL.prevAcc=acc;
-        console.log(GLOBAL.prevAcc)
         /*console.log(getDisplacement(GLOBAL.initialVel, 0.1, event.accelerometer.y - event.gravity.y))
         console.log(event.accelerometer.y - event.gravity.y)
         if (event.accelerometer.y - event.gravity.y > 5) {
@@ -124,7 +128,6 @@ const MyHeadlessTask = async () => {
     );
 
     //console.log('Past:'+pastSpeed+' Current:'+GLOBAL.speed)
-    store.dispatch(setLol(true));
     setTimeout(() => {
         subscription.unsubscribe()
     }, 21)
